@@ -1,0 +1,38 @@
+== PDP : Professional Development Platform
+
+The goal of PDP is to be a social network helping you to develop your competences.
+
+It works by using a network of people you trust that can share links about topics you are interested in.
+
+It works by integrating feedback : when you share something, you will get feedback from the people in your network.  When you read things shared by someone else, you are invited to give feedback about how interresting it was.
+The goal of those feedback is to enhance the quality of the info being shared.
+
+
+== Roadmap
+
+- Login : Identification without password
+- Login : Password based identification
+- Login : Google identification
+- Login : LinkedIn identification
+- Login : Twitter identification
+- Login : Facebook identification
+
+- User Profile : Link other network id (Google, linkedIn, Twitter, facebook)
+- User Profile : First name - Last name - city
+- User Profile : Auto complete city/location
+- User Profile : Photo
+- User Profile : import photo for other social network
+- User Profile : geolocalisation of the registered city
+
+- Network : Add trust person
+- Network : Configure trust level per competences
+- Network : List persons you trust
+- Network : List persons trusting you
+
+- Competences : Add a competence
+- Competence : View a competence page
+
+
+- Sharing : Post a sharing
+- Sharing : 
+- Sharing : Regional filtering
