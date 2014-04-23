@@ -16,23 +16,43 @@ The goal of those feedback is to enhance the quality of the info being shared.
 - Login : LinkedIn identification
 - Login : Twitter identification
 - Login : Facebook identification
+- Login : captcha
 
 - User Profile : Link other network id (Google, linkedIn, Twitter, facebook)
-- User Profile : First name - Last name - city
+- User Profile : First name - Last name - city - email - Language
 - User Profile : Auto complete city/location
 - User Profile : Photo
 - User Profile : import photo for other social network
 - User Profile : geolocalisation of the registered city
+- User Profile : email validation
+- User Profile : email preferences (per share, daily, weekly, monthly : per knowledge area)
 
 - Network : Add trust person
 - Network : Configure trust level per competences
 - Network : List persons you trust
 - Network : List persons trusting you
+- Network : Invite someone by email
 
-- Competences : Add a competence
-- Competence : View a competence page
-
+- Knowledge Area: Add a knowledge area
+- Knowledge Area: View a knowledge page
 
 - Sharing : Post a sharing
-- Sharing : 
+- Sharing : Indexing and search
 - Sharing : Regional filtering
+- Sharing : Language filtering
+- Sharing : Language tagging
+- Sharing : Language recognition
+
+- Email : per share
+- Email : daily/weekly/monthly digest
+- Email : Inform about network evolution
+
+- Site: specific DNS 
+- Site: public hosting
+
+- 360 degree feedback
+- Sharing: Books tagging
+- Sharing: Event tagging
+- Sharing: Training & certification tagging
+
+- Trust icon: a pyramid with 3 layers
