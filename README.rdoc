@@ -8,7 +8,7 @@ It works by integrating feedback : when you share something, you will get feedba
 The goal of those feedback is to enhance the quality of the info being shared.
 
 
-== Roadmap
+== Feature list
 
 - Login : Identification without password
 - Login : Password based identification
@@ -35,6 +35,10 @@ The goal of those feedback is to enhance the quality of the info being shared.
 
 - Knowledge Area: Add a knowledge area
 - Knowledge Area: View a knowledge page
+- Knowledge Area: Manage relationship between areas
+- Knowledge Area: Self evaluation
+- Knowledge Area: Feedback for others
+- Knowledge Area: Manage interest
 
 - Sharing : Post a sharing
 - Sharing : Indexing and search
@@ -42,6 +46,9 @@ The goal of those feedback is to enhance the quality of the info being shared.
 - Sharing : Language filtering
 - Sharing : Language tagging
 - Sharing : Language recognition
+- Sharing : Personalize URL with redirect to track consultations
+- Sharing : Ask feedback to people who follow the links
+- Sharing : Ranking level based on feedback, interest and network of the person
 
 - Email : per share
 - Email : daily/weekly/monthly digest
@@ -51,8 +58,18 @@ The goal of those feedback is to enhance the quality of the info being shared.
 - Site: public hosting
 
 - 360 degree feedback
+- Organisation : Create new organisation
+- Organisation : Claim to be part of an organisation
+- Organisation : Accept/reject a person from an organisation
+- Organisation : End date
+- Organisation : Take into account into the network
+- Organisation : Report about current knowledge vs industry knowledge vs interrest
+- Organisation : Allow to expose Knowledge areas expertise / interest
+
 - Sharing: Books tagging
 - Sharing: Event tagging
 - Sharing: Training & certification tagging
 
 - Trust icon: a pyramid with 3 layers
+
+- Feedback page to collect feedback about the application
