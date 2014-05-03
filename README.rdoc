@@ -1,6 +1,6 @@
-== PDP : Professional Development Platform
+== Netmento : Professional Development Platform
 
-The goal of PDP is to be a social network helping you to develop your competences.
+The goal of netmento is to be a social network helping you to develop your competences.
 
 It works by using a network of people you trust that can share links about topics you are interested in.
 
