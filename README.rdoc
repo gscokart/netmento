@@ -73,3 +73,18 @@ The goal of those feedback is to enhance the quality of the info being shared.
 - Trust icon: a pyramid with 3 layers
 
 - Feedback page to collect feedback about the application
+
+
+== Inspiration
+This site doesn't came out of nowhere, it take its inspiration from various sites.  Amongst them :
+- Facebook
+- Twitter
+- LinkedIn
+- Openclassroom
+- Perltrees
+- Scoopit
+- Marketplace
+- stackoverflow
+
+== A name
+- netmento
