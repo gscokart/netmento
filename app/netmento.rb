@@ -3,7 +3,6 @@
 require 'sinatra'
 
 enable :session
-set :public_folder, File.dirname(__FILE__) + '/../static/'
 
 use Rack::Auth::Basic, "Netmento" do |username, password|
   ([username, password] == ['admin', 'admin']) or ([username, password] == ['other', 'other'])
