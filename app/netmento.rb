@@ -19,14 +19,18 @@ get '/netmento' do
   haml :home, :format => :html5
 end
 
-get '/netmento/:user' do
-  "Welcome #{params['user']}"
+get '/profile' do
+  haml :profile, :format => :html5
 end
 
-class Stream
-  def each
-    100.times { |i| yield "tt=#{i}\n" }
-  end
+get '/network' do
+  haml :network, :format => :html5
 end
 
-get('/t') { Stream.new }
+get '/knowledgeArea' do
+  haml :knowledgeArea, :format => :html5
+end
+
+get '/share' do
+  haml :share, :format => :html5
+end
