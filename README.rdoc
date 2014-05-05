@@ -88,3 +88,10 @@ This site doesn't came out of nowhere, it take its inspiration from various site
 
 == A name
 - netmento
+
+== Next steps
+- Connection DB
+- RSpec test
+- Separated module sinatra
+- config.ru
+- rvm

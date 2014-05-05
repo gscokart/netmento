@@ -15,7 +15,6 @@ end
 
 get '/netmento' do
   #TODO understand how env is accessible/defined here, and if it is thread safe
-  #"This is the home page = #{env['REMOTE_USER']}"
   haml :home, :format => :html5
 end
 

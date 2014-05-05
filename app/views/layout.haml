@@ -10,6 +10,10 @@
     #wrapper
       #header
         %h1 Netmento
+        #user
+          %a(href="profile") 
+            Welcome 
+            = env['REMOTE_USER']
         #nav
           %ol
             %a(href="/")
