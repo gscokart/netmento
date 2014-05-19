@@ -1,16 +1,20 @@
 
 
 require 'sinatra/base'
-
+require 'mongo'
+include Mongo
 
 
 class Netmento < Sinatra::Base
+
+  DB = MongoClient.new['local']
 
   enable :logging
   #enable :session
 
   use Rack::Auth::Basic, "Netmento" do |username, password|
     ([username, password] == ['admin', 'admin']) or ([username, password] == ['other', 'other'])
+    
   end
 
   get '/' do
@@ -22,8 +26,8 @@ class Netmento < Sinatra::Base
     haml :home, :format => :html5
   end
 
-  get '/profile' do
-    haml :profile, :format => :html5
+  get '/profile' do    
+    haml :profile, :format => :html5, :locals => {:user => DB.collection("users").find({:userId => "admin"}).next } 
   end
 
   get '/network' do
@@ -37,7 +41,6 @@ class Netmento < Sinatra::Base
   get '/share' do
     haml :share, :format => :html5
   end
-  
   
   # start the server if ruby file executed directly
   run! if app_file == $0

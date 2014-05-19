@@ -1,10 +1,10 @@
 == Netmento : Professional Development Platform
 
-The goal of netmento is to be a social network helping you to develop your competences.
+Netmento is a social network helping you to develop your competences.
 
 It works by using a network of people you trust that can share links about topics you are interested in.
 
-It works by integrating feedback : when you share something, you will get feedback from the people in your network.  When you read things shared by someone else, you are invited to give feedback about how interresting it was.
+It works by integrating feedback : when you share something, you will get feedback from the people in your network.  When you read things shared by someone else, you are invited to give feedback about how interesting it was.
 The goal of those feedback is to enhance the quality of the info being shared.
 
 
@@ -86,10 +86,11 @@ This site doesn't came out of nowhere, it take its inspiration from various site
 - Marketplace
 - stackoverflow
 
-== A name
-- netmento
-
 == Next steps
 - Connection DB
+- Understand connection pooling (and interactions with shotgun)
+- Use config.ru/shotgun to start mongoDB
 - RSpec test
 - rvm
+- Rake file
+- Pourquoi un fichier VERSION ?
