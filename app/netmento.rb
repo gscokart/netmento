@@ -7,27 +7,35 @@ include Mongo
 
 class Netmento < Sinatra::Base
 
-  DB = MongoClient.new['local']
-
+  def initialize() 
+    super()
+    #Is it thread safe ?
+    @db = MongoClient.new['local']
+  end 
   enable :logging
-  #enable :session
 
+  #TODO: how to make that cluster safe?
+  use Rack::Session::Pool, :expire_after => 2592000
+  
   use Rack::Auth::Basic, "Netmento" do |username, password|
-    ([username, password] == ['admin', 'admin']) or ([username, password] == ['other', 'other'])
-    
+    ([username, password] == ['admin', 'admin']) or ([username, password] == ['other', 'other'])    
   end
 
+  before do
+    session[:user] = @db.collection("users").find_one({:userId => "admin"}) unless session[:user]
+    @user = session[:user]
+  end
+  
   get '/' do
     redirect '/netmento'
   end
 
   get '/netmento' do
-    #TODO understand how env is accessible/defined here, and if it is thread safe
     haml :home, :format => :html5
   end
 
   get '/profile' do    
-    haml :profile, :format => :html5, :locals => {:user => DB.collection("users").find({:userId => "admin"}).next } 
+    haml :profile, :format => :html5, :locals => {:user => session[:user] } 
   end
 
   get '/network' do

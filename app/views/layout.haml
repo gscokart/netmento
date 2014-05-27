@@ -13,7 +13,7 @@
         #user
           %a(href="profile") 
             Welcome 
-            = env['REMOTE_USER']
+            = @user["name"]
         #nav
           %ol
             %a(href="/")
