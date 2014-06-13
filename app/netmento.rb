@@ -18,10 +18,12 @@ class Netmento < Sinatra::Base
   use Rack::Session::Pool, :expire_after => 2592000
   
   use Rack::Auth::Basic, "Netmento" do |username, password|
-    ([username, password] == ['admin', 'admin']) or ([username, password] == ['other', 'other'])    
+    #TODO check the password in mongoDB
+    ([username, password] == [username, username]) 
   end
 
   before do
+    #TODO get the real user from ENV
     session[:user] = @db.collection("users").find_one({:userId => "admin"}) unless session[:user]
     @user = session[:user]
   end
@@ -34,8 +36,16 @@ class Netmento < Sinatra::Base
     haml :home, :format => :html5
   end
 
-  get '/profile' do    
-    haml :profile, :format => :html5, :locals => {:user => session[:user] } 
+  post '/profile' do
+    @user["name"] = params[:name]
+    @db.collection("users").save(@user)
+    #TODO find a way to redirect
+    haml :profile, :format => :html5
+  end
+
+  
+  get '/profile' do
+    haml :profile, :format => :html5
   end
 
   get '/network' do
