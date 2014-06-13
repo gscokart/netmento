@@ -15,15 +15,15 @@
             Netmento
         .collapse.navbar-collapse
           %ul.nav.navbar-nav
-            %li.active
-              %a(href="/") Home
-            %li
+            %li{:class => env["REQUEST_PATH"]=="/netmento" && "active"}
+              %a(href="/netmento") Home
+            %li{:class => env["REQUEST_PATH"]=="/profile" && "active"}
               %a(href="profile") Profile
-            %li
+            %li{:class => env["REQUEST_PATH"]=="/network" && "active"}
               %a(href="network") Network
-            %li
+            %li{:class => env["REQUEST_PATH"]=="/knowledgeArea" && "active"}
               %a(href="knowledgeArea") Knowledge Area
-            %li
+            %li{:class => env["REQUEST_PATH"]=="/share" && "active"}
               %a(href="share") Share
           .nav.navbar-nav.navbar-right
             %p.navbar-text

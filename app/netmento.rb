@@ -39,7 +39,8 @@ class Netmento < Sinatra::Base
   post '/profile' do
     @user["name"] = params[:name]
     @db.collection("users").save(@user)
-    #TODO find a way to redirect
+    #TODO update it in the session
+    #TODO find a way to the GET result
     haml :profile, :format => :html5
   end
 
