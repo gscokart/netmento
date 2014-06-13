@@ -1,14 +1,23 @@
 
-#profile
-  #userId
-    This is the profile page of
-    = @user["userId"]
-  #name
-    Name:
-    = @user["name"]
+%h2
+  Profile
 
-  #email
-    Email:
-    = @user["email"]
+%form(method="POST")
+  .form-group
+    %label
+      UserID:
+    %label
+      = @user["userId"]
+  .form-group
+    %label
+      Name:
+    %input.form-control{:name=>:name, :value=>@user["name"]}
+  .form-group
+    %label
+      Email:
+    %input.form-control{:name=>:email, :type=>:email, :value=>@user["email"]}
+  %button.btn.btn-default(type="submit")
+    Save
+  
 
 

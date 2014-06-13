@@ -6,35 +6,40 @@
     %title Netmento
     %link(rel="stylesheet" href="http://yui.yahooapis.com/3.16.0/build/cssreset/cssreset-min.css")
     %link(rel="stylesheet" href="css/styles.css")
+    %link(rel="stylesheet" href="bootstrap/css/bootstrap.min.css")
   %body
-    #wrapper
-      #header
-        %h1 Netmento
-        #user
-          %a(href="profile") 
-            Welcome 
-            = @user["name"]
-        #nav
-          %ol
-            %a(href="/")
-              %li Home
-            %a(href="profile")
-              %li Profile
-            %a(href="network")
-              %li Network
-            %a(href="knowledgeArea")
-              %li Knowledge Area
-            %a(href="share")
-              %li Share
-      
-      #content
-        =yield
-
-      #side_bar
-        %h1 Side Bar
-        %p
-        This is the side bar of the webpage
-     
-      #footer
-        %p
-          This is the footer.
+    .navbar.navbar-default
+      .container-fluid
+        .navbar-header
+          .navbar-brand
+            Netmento
+        .collapse.navbar-collapse
+          %ul.nav.navbar-nav
+            %li.active
+              %a(href="/")
+                Home
+            %li
+              %a(href="profile")
+                Profile
+            %li
+              %a(href="network")
+                Network
+            %li
+              %a(href="knowledgeArea")
+                Knowledge Area
+            %li
+              %a(href="share")
+                Share
+          .nav.navbar-nav.navbar-right
+            %p.navbar-text
+              Welcome 
+              %a(href="profile") 
+                = @user["name"]  
+    .container
+      =yield
+    -#%footer
+      %p
+        &copy; Netmento 2014
+    -# Placed at the end of the document so the pages load faster
+    %script(src="jquery-2.1.1.js")
+    %script(src="bootstrap/js/bootstrap.min.js")
