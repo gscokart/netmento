@@ -84,7 +84,7 @@ This site doesn't came out of nowhere, it take its inspiration from various site
 - Perltrees
 - Scoopit
 - Marketplace
-- stackoverflow
+- Stackoverflow
 
 == Next steps
 - Connection DB
