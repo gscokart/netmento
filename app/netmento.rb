@@ -1,8 +1,18 @@
 
-
 require 'sinatra/base'
 require 'mongo'
 include Mongo
+
+class Login < Sinatra::Base
+
+  #TODO understand what the parameter is (it fails if I remove it)
+  def initialize(args) 
+    super()
+    #Is it thread safe ?
+    @db = MongoClient.new['local']
+  end 
+  
+end
 
 
 class Netmento < Sinatra::Base
@@ -12,26 +22,64 @@ class Netmento < Sinatra::Base
     #Is it thread safe ?
     @db = MongoClient.new['local']
   end 
-  enable :logging
-
-  #TODO: how to make that cluster safe?
-  use Rack::Session::Pool, :expire_after => 2592000
   
-  use Rack::Auth::Basic, "Netmento" do |username, password|
-    #TODO check the password in mongoDB
-    ([username, password] == [username, username]) 
+  configure :production do
+    enable :logging
+    #TODO: how to make that cluster safe?
+    use Rack::Session::Pool, :expire_after => 2592000
   end
 
+  configure :development do
+    enable :logging
+    enable :sessions
+    set :session_secret => 'TODO: Use an external secret'
+  end
+  
+
+  def logged_in?
+    session[:user]!=nil
+  end
+
+  get '/login' do
+    haml :login, :layout => nil
+  end
+
+  post '/login' do
+    #TODO Check password
+    session[:user] = @db.collection("users").find_one({:userId => params["name"]})
+    redirect '/netmento'
+  end
+
+  post '/register' do
+    haml :login, :layout => nil
+  end
+  
+  get '/logout' do
+    session.clear
+    redirect '/login'
+  end
+  
+  get(//) do
+    pass if logged_in?
+    redirect '/login'
+  end
+
+  post(//) do
+    pass if logged_in?
+    redirect '/login'
+  end
+
+  
   before do
     #TODO get the real user from ENV
-    session[:user] = @db.collection("users").find_one({:userId => "admin"}) unless session[:user]
+    #session[:user] = @db.collection("users").find_one({:userId => "admin"}) unless session[:user]
     @user = session[:user]
   end
   
   get '/' do
     redirect '/netmento'
-  end
-
+  end    
+  
   get '/netmento' do
     haml :home, :format => :html5
   end
