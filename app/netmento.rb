@@ -5,24 +5,12 @@ include Mongo
 
 class Login < Sinatra::Base
 
-  #TODO understand what the parameter is (it fails if I remove it)
-  def initialize(args) 
-    super()
-    #Is it thread safe ?
-    @db = MongoClient.new['local']
-  end 
-  
-end
-
-
-class Netmento < Sinatra::Base
-
   def initialize() 
     super()
     #Is it thread safe ?
     @db = MongoClient.new['local']
   end 
-  
+
   configure :production do
     enable :logging
     #TODO: how to make that cluster safe?
@@ -68,6 +56,15 @@ class Netmento < Sinatra::Base
     pass if logged_in?
     redirect '/login'
   end
+  
+end
+
+
+class Netmento < Login
+
+  def initialize() 
+    super()
+  end 
 
   
   before do
