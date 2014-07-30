@@ -7,7 +7,7 @@ class Login < Sinatra::Base
 
   def initialize() 
     super()
-    #Is it thread safe ?
+    #TODO Is it thread safe ?
     @db = MongoClient.new['local']
   end 
 
@@ -39,7 +39,12 @@ class Login < Sinatra::Base
   end
 
   post '/register' do
-    haml :login, :layout => nil
+    #TODO store hash of the password
+    #TODO check user identity using an email
+    #TODO Use captcha
+    @db.collection("users").save({:userId => params["name"], :password => params['password']})
+    session[:user] = @db.collection("users").find_one({:userId => params["name"]})
+    redirect '/profile'
   end
   
   get '/logout' do
@@ -65,7 +70,6 @@ class Netmento < Login
   def initialize() 
     super()
   end 
-
   
   before do
     #TODO get the real user from ENV
@@ -83,6 +87,7 @@ class Netmento < Login
 
   post '/profile' do
     @user["name"] = params[:name]
+    @user["email"] = params[:email]
     @db.collection("users").save(@user)
     #TODO update it in the session
     #TODO find a way to the GET result
