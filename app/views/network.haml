@@ -1,11 +1,13 @@
 
 
 
-%p Mentors are people your trust the knowledge and trust their advices.  It might be leaders in their area, but also people that with similar interest than you.
-.input-group
-  %input.form-control(type="text")
-    %span.input-group-btn
-      %button.btn.btn-default(type="button") Search
+%p Mentors are people your trust the knowledge and trust their advices.  It might be leaders in their area, but also people with similar interest than you.
+%form(method="get")
+  .input-group
+    %input.form-control{:type=>:text, :name=>:name, :value=>params["name"]}
+      %span.input-group-btn
+        %button.btn.btn-default(type="submit") Search
+
 
 %h4 Your current mentors are :
 .list-group
