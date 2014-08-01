@@ -5,8 +5,8 @@ include Mongo
 
 class Login < Sinatra::Base
 
-  def initialize() 
-    super()
+  def initialize(app) 
+    super(app)
     #TODO Is it thread safe ?
     @db = MongoClient.new['local']
   end 
@@ -34,6 +34,7 @@ class Login < Sinatra::Base
 
   post '/login' do
     #TODO Check password
+    #TODO Move the lookup into its own DAO/business layer
     session[:user] = @db.collection("users").find_one({:userId => params["name"]})
     redirect '/netmento'
   end
@@ -43,6 +44,7 @@ class Login < Sinatra::Base
     #TODO check user identity using an email
     #TODO Use captcha
     @db.collection("users").save({:userId => params["name"], :password => params['password']})
+    #TODO: Call the login logic
     session[:user] = @db.collection("users").find_one({:userId => params["name"]})
     redirect '/profile'
   end
@@ -65,10 +67,11 @@ class Login < Sinatra::Base
 end
 
 
-class Netmento < Login
+class Netmento < Sinatra::Base
 
   def initialize() 
     super()
+    @db = MongoClient.new['local']
   end 
   
   before do
