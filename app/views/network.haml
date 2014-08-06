@@ -7,6 +7,20 @@
     %input.form-control{:type=>:text, :name=>:name, :value=>params["name"]}
       %span.input-group-btn
         %button.btn.btn-default(type="submit") Search
+-if found
+  -if found.has_next?
+    %h4 Do you want to trust :
+    .list-group
+      %form(method="post" action="trust")
+        -found.each do |user| 
+          %li.list-group-item
+            %h5.list-group-item-heading 
+              %a(href="/user/XXXXX")
+                =user["name"]
+              %button.btn.btn-default{:type=>:submit, :name=>:userId, :value=>user["userId"]}
+                Trust
+  -else
+    No user found.
 
 
 %h4 Your current mentors are :

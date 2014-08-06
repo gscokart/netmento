@@ -75,8 +75,6 @@ class Netmento < Sinatra::Base
   end 
   
   before do
-    #TODO get the real user from ENV
-    #session[:user] = @db.collection("users").find_one({:userId => "admin"}) unless session[:user]
     @user = session[:user]
   end
   
@@ -103,7 +101,11 @@ class Netmento < Sinatra::Base
   end
 
   get '/network' do
-    haml :network, :format => :html5
+    found = nil
+    if params[:name] 
+       found = @db.collection("users").find({:name => params["name"]})
+    end
+    haml :network, :format => :html5, :locals => { :found => found }
   end
 
   get '/knowledgeArea' do
