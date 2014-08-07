@@ -101,11 +101,22 @@ class Netmento < Sinatra::Base
   end
 
   get '/network' do
-    found = nil
-    if params[:name] 
-       found = @db.collection("users").find({:name => params["name"]})
-    end
+    haml :network, :format => :html5, :locals => { :found => nil }
+  end
+  
+  post '/network' do
+    found = @db.collection("users").find({:name => params["name"]})
     haml :network, :format => :html5, :locals => { :found => found }
+  end
+  
+  post '/trust' do
+    trust = (@user["trust"] or []).push(BSON::ObjectId.from_string(params['_id']))
+    @user["trust"] = trust
+    @db.collection("users").save(@user)
+    #TODO Move this to a separated class
+    #TODO Make sure we don't add 2 time the same person
+    #TODO Make sure we don't add ourself
+    redirect back
   end
 
   get '/knowledgeArea' do

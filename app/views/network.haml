@@ -2,7 +2,7 @@
 
 
 %p Mentors are people your trust the knowledge and trust their advices.  It might be leaders in their area, but also people with similar interest than you.
-%form(method="get")
+%form(method="post")
   .input-group
     %input.form-control{:type=>:text, :name=>:name, :value=>params["name"]}
       %span.input-group-btn
@@ -17,7 +17,7 @@
             %h5.list-group-item-heading 
               %a(href="/user/XXXXX")
                 =user["name"]
-              %button.btn.btn-default{:type=>:submit, :name=>:userId, :value=>user["userId"]}
+              %button.btn.btn-default{:type=>:submit, :name=>:_id, :value=>user["_id"].to_s}
                 Trust
   -else
     No user found.
