@@ -25,9 +25,11 @@
 
 %h4 Your current mentors are :
 .list-group
-  %a.list-group-item(href="/user/gscokart")
-    %h5.list-group-item-heading Gilles Scokart
-    .list-group-item-text Its major tags he is trusted for, and the level I trust him
+  -trusted.each do |user| 
+    %a.list-group-item(href="/user/XXXXX")
+      %h5.list-group-item-heading
+        =user["name"]
+      .list-group-item-text Its major tags he is trusted for, and the level I trust him
 
 %h4 You are the mentor of :
 .list-group

@@ -101,12 +101,16 @@ class Netmento < Sinatra::Base
   end
 
   get '/network' do
-    haml :network, :format => :html5, :locals => { :found => nil }
+    trusted = @db.collection("users").find({"_id" => {"$in" => @user["trust"]}})
+    trusting = nil
+    haml :network, :format => :html5, :locals => { :found => nil , :trusted => trusted , :trusting => trusting}
   end
   
   post '/network' do
+    trusted = @db.collection("users").find({"_id" => {"$in" => @user["trust"]}})
+    trusting = nil
     found = @db.collection("users").find({:name => params["name"]})
-    haml :network, :format => :html5, :locals => { :found => found }
+    haml :network, :format => :html5, :locals => { :found => found , :trusted => trusted , :trusting => trusting}
   end
   
   post '/trust' do
