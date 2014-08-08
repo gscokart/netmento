@@ -101,14 +101,15 @@ class Netmento < Sinatra::Base
   end
 
   get '/network' do
+    #TODO remove duplication between the get and the post
     trusted = @db.collection("users").find({"_id" => {"$in" => @user["trust"]}})
-    trusting = nil
+    trusting = @db.collection("users").find({"trust" => {"$elemMatch" => { "$eq" => @user["_id"]}}})
     haml :network, :format => :html5, :locals => { :found => nil , :trusted => trusted , :trusting => trusting}
   end
   
   post '/network' do
     trusted = @db.collection("users").find({"_id" => {"$in" => @user["trust"]}})
-    trusting = nil
+    trusting = @db.collection("users").find({"trust" => {"$elemMatch" => @user["_id"]}})
     found = @db.collection("users").find({:name => params["name"]})
     haml :network, :format => :html5, :locals => { :found => found , :trusted => trusted , :trusting => trusting}
   end
