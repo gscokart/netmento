@@ -132,6 +132,14 @@ class Netmento < Sinatra::Base
     haml :share, :format => :html5
   end
   
+  post '/share' do
+    # TODO add a timestamp
+    # TODO add possibly a tag
+    # TODO add possibly a level
+    @db.collection("learnings").save({:owner => @user["_id"], :descr => params['learning']})
+    haml :share, :format => :html5
+  end
+  
   # start the server if ruby file executed directly
   run! if app_file == $0
   
