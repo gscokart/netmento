@@ -5,3 +5,8 @@
   padding: 15px;
   margin: 0 auto;
 }
+
+.author {
+  text-align: right;
+  font-size: 80%;
+}

@@ -83,7 +83,11 @@ class Netmento < Sinatra::Base
   end    
   
   get '/netmento' do
-    haml :home, :format => :html5
+    learnings = @db.collection("learnings").find({"author_id" => {"$in" => @user["trust"]}})
+    #TODO Add sorting
+    #TODO remove the one already reviewed
+    #=> Plutot que de faire une requete, je devrais pousser les news chez mes follower (genre mailbox)
+    haml :home, :format => :html5, :locals => { :learnings => learnings}
   end
 
   post '/profile' do
@@ -136,7 +140,7 @@ class Netmento < Sinatra::Base
     # TODO add a timestamp
     # TODO add possibly a tag
     # TODO add possibly a level
-    @db.collection("learnings").save({:owner => @user["_id"], :descr => params['learning']})
+    @db.collection("learnings").save({:author_id => @user["_id"], :author => @user["name"], :descr => params['learning']})
     haml :share, :format => :html5
   end
   

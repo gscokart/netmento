@@ -1,2 +1,12 @@
 
-This is the home page
+%h4 People in your network learned this
+
+.list-group
+  -learnings.each do |learning| 
+    .list-group-item
+      .list-group-item-text
+        =learning["descr"]
+      %a.list-group-item-text.author(href="/user/XXXXX")
+        shared by
+        =learning["author"]
+
