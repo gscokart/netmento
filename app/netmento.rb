@@ -87,6 +87,7 @@ class Netmento < Sinatra::Base
     #TODO Add sorting
     #TODO remove the one already reviewed
     #=> Plutot que de faire une requete, je devrais pousser les news chez mes follower (genre mailbox)
+    #TODO render the post as markdown text
     haml :home, :format => :html5, :locals => { :learnings => learnings}
   end
 
