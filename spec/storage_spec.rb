@@ -9,14 +9,15 @@ module Netmento
   end
 
   describe Storage::Storage do
-  
     it 'conect to rspec database in test' do
-      expect(subject.dbName).to eq("rspec")
+      expect(Storage::Storage.store.dbName).to eq("rspec")
     end
-    
-    it 'Save new users' do
-      newUser = {:userId => 'userId', :password => 'xxx'}
-      subject.createUser(newUser)
+    it 'has an instance per thread' do
+      other = nil
+      Thread.new {
+        other = Storage::Storage.store
+      }.join
+      expect(Storage::Storage.store).not_to be other
     end
   end
   
@@ -24,6 +25,10 @@ module Netmento
     it 'has an _id attribute' do
       subject._id = 33
       expect(subject._id).to eq(33)
+    end
+    
+    it 'register as dirty entity on creation' do
+      expect(Storage::Storage.store.dirty).to include(subject)
     end
   end
 
