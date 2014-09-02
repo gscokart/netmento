@@ -7,12 +7,21 @@ module Netmento
   module Storage
 
     class Entity
+      @@fields = []
+      
       def initialize ()
         Storage.store.addDirty(self)
       end
     
       def self.attr_stored(attrName)
         attr_accessor(attrName)
+        @@fields.push attrName
+      end
+      
+      def to_hash
+        result = Hash.new
+        @@fields.each { |field| result[field] = 33 }
+        return result
       end
       
       attr_stored(:_id)

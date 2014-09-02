@@ -19,6 +19,10 @@ module Netmento
       }.join
       expect(Storage::Storage.store).not_to be other
     end
+    
+    it 'persist all dirty entities' do
+    
+    end
   end
   
   describe Storage::Entity do
@@ -29,6 +33,15 @@ module Netmento
     
     it 'register as dirty entity on creation' do
       expect(Storage::Storage.store.dirty).to include(subject)
+    end
+    
+    it 'provides map of values' do
+      class MyEntity < Storage::Entity
+        attr_stored(:aField)
+      end
+      subject = MyEntity.new
+      subject.aField = 33
+      expect(subject.to_hash).to include(:aField => 33)
     end
   end
 
