@@ -9,7 +9,8 @@ module Netmento
     class Entity
       @@fields = []
       
-      def initialize ()
+      def initialize ( collectionName = nil)
+        @collectionName = collectionName || self.class.name.split("::").last
         Storage.store.addDirty(self)
       end
     
@@ -25,6 +26,7 @@ module Netmento
       end
       
       attr_stored(:_id)
+      attr_reader(:collectionName)
     end
 
 

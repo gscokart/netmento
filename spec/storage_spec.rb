@@ -21,7 +21,7 @@ module Netmento
     end
     
     it 'persist all dirty entities' do
-    
+      
     end
   end
   
@@ -35,14 +35,33 @@ module Netmento
       expect(Storage::Storage.store.dirty).to include(subject)
     end
     
-    it 'provides map of values' do
-      class MyEntity < Storage::Entity
-        attr_stored(:aField)
-      end
+    it 'provides hash of values' do
       subject = MyEntity.new
       subject.aField = 33
       expect(subject.to_hash).to include(:aField => 33)
     end
+    
+    it 'map to a collection defaulting to the class name' do
+      subject = MyEntity.new
+      expect(subject.collectionName).to eq("MyEntity")
+    end
+
+    it 'allow subclass to define the collection name' do
+      class OtherEntity < Storage::Entity
+        def initialize()
+          super("CollectionName")
+        end
+      end
+
+      subject = OtherEntity.new
+      expect(subject.collectionName).to eq("CollectionName")
+    end
+
+    
+    class MyEntity < Storage::Entity
+      attr_stored(:aField)
+    end
+
   end
 
 end
