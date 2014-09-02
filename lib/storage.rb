@@ -50,6 +50,17 @@ module Netmento
         raise TypeError unless entity.is_a?(Entity)
         @dirty.add(entity)
       end
+      
+      def flush()
+        @dirty.each { |entity|
+          persist(entity)
+        }
+      end
+      
+      def persist ( entity )
+        raise TypeError unless entity.is_a?(Entity)
+        @dirty.delete(entity)
+      end
     end
     
   end

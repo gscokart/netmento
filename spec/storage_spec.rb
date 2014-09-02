@@ -8,6 +8,11 @@ module Netmento
     def self.dbName; "rspec" end
   end
 
+  class MyEntity < Storage::Entity
+    attr_stored(:aField)
+  end
+
+  
   describe Storage::Storage do
     it 'conect to rspec database in test' do
       expect(Storage::Storage.store.dbName).to eq("rspec")
@@ -21,7 +26,21 @@ module Netmento
     end
     
     it 'persist all dirty entities' do
-      
+      entity = MyEntity.new
+      Storage::Storage.store.dirty.add(entity)
+      Storage::Storage.store.flush
+      #TODO check we have persisted the entity
+    end
+    
+    it 'remove persisted entities from the dirty set of entities' do
+      entity = MyEntity.new
+      Storage::Storage.store.dirty.add(entity)
+      Storage::Storage.store.persist(entity)
+      expect(Storage::Storage.store.dirty).not_to include(entity)
+    end
+
+    it 'provides the _id to the persisted entities' do
+      #TODO
     end
   end
   
@@ -58,10 +77,6 @@ module Netmento
     end
 
     
-    class MyEntity < Storage::Entity
-      attr_stored(:aField)
-    end
-
   end
 
 end
