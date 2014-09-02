@@ -29,7 +29,7 @@ module Netmento
       entity = MyEntity.new
       Storage::Storage.store.dirty.add(entity)
       Storage::Storage.store.flush
-      #TODO check we have persisted the entity
+      expect(Storage::Storage.store.find(entity.collectionName , entity._id)).not_to be_nil
     end
     
     it 'remove persisted entities from the dirty set of entities' do
@@ -40,7 +40,15 @@ module Netmento
     end
 
     it 'provides the _id to the persisted entities' do
-      #TODO
+      entity = MyEntity.new
+      Storage::Storage.store.persist(entity)
+      expect(entity._id).not_to be_nil
+    end
+    
+    it 'can load an entity from its _id' do
+      entity = MyEntity.new
+      Storage::Storage.store.persist(entity)
+      expect(Storage::Storage.store.find(entity.collectionName , entity._id)).not_to be_nil
     end
   end
   
@@ -71,11 +79,9 @@ module Netmento
           super("CollectionName")
         end
       end
-
       subject = OtherEntity.new
       expect(subject.collectionName).to eq("CollectionName")
     end
-
     
   end
 

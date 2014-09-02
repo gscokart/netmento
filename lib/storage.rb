@@ -59,7 +59,12 @@ module Netmento
       
       def persist ( entity )
         raise TypeError unless entity.is_a?(Entity)
+        entity._id = @db.collection(entity.collectionName).save(entity.to_hash)
         @dirty.delete(entity)
+      end
+      
+      def find ( collectionName , id)
+        @db.collection(collectionName).find({"_id" => id})
       end
     end
     
