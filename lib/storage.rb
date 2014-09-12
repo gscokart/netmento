@@ -7,26 +7,37 @@ module Netmento
   module Storage
 
     class Entity
-      @@fields = []
       
-      def initialize ( collectionName = nil)
-        @collectionName = collectionName || self.class.name.split("::").last
+      def initialize ( )
+        raise "collectionName must be defined.  Please invoke use_collection_name class method" \
+          unless self.class.class_variable_defined?(:@@collectionName)
         Storage.store.addDirty(self)
       end
     
       def self.attr_stored(attrName)
         attr_accessor(attrName)
+        @@fields ||= []
         @@fields.push attrName
       end
       
       def to_hash
         result = Hash.new
-        @@fields.each { |field| result[field] = 33 }
+        @@fields ||= []
+        @@fields.each { |field| result[field] = self.instance_variable_get(("@" + field.to_s).to_sym) }
+        result[:_id] = @_id if  @_id
         return result
       end
       
-      attr_stored(:_id)
-      attr_reader(:collectionName)
+      def self.use_collection_name(colName) 
+        class_variable_set(:@@collectionName, colName)
+      end
+      
+      def collectionName
+        self.class.class_variable_get(:@@collectionName)
+      end
+      
+      attr_accessor(:_id)
+
     end
 
 
@@ -57,15 +68,26 @@ module Netmento
         }
       end
       
-      def persist ( entity )
+      def persist ( entity )        
         raise TypeError unless entity.is_a?(Entity)
         entity._id = @db.collection(entity.collectionName).save(entity.to_hash)
         @dirty.delete(entity)
       end
       
-      def find ( collectionName , id)
-        @db.collection(collectionName).find({"_id" => id})
+      def find ( collectionClass , id)
+        colName = collectionClass.class_variable_get(:@@collectionName)
+        hash = @db.collection(colName).find_one({"_id" => id})
+        return createFromHash(collectionClass, hash)
       end
+      
+      def createFromHash( collectionClass, hash)
+        result = collectionClass.new
+        hash.each { |key, value| 
+          result.instance_variable_set(eval(":@"+key), value)
+        }
+        return result
+      end
+      
     end
     
   end

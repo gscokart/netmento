@@ -9,6 +9,7 @@ module Netmento
   end
 
   class MyEntity < Storage::Entity
+    use_collection_name "MyEntity"
     attr_stored(:aField)
   end
 
@@ -29,7 +30,7 @@ module Netmento
       entity = MyEntity.new
       Storage::Storage.store.dirty.add(entity)
       Storage::Storage.store.flush
-      expect(Storage::Storage.store.find(entity.collectionName , entity._id)).not_to be_nil
+      expect(Storage::Storage.store.find(MyEntity, entity._id)).not_to be_nil
     end
     
     it 'remove persisted entities from the dirty set of entities' do
@@ -48,17 +49,34 @@ module Netmento
     it 'can load an entity from its _id' do
       entity = MyEntity.new
       Storage::Storage.store.persist(entity)
-      expect(Storage::Storage.store.find(entity.collectionName , entity._id)).not_to be_nil
+      expect(Storage::Storage.store.find(MyEntity , entity._id)).not_to be_nil
+    end
+    
+    it 'persist changes made to an entity' do
+      entity = MyEntity.new
+      entity.aField = 33
+      Storage::Storage.store.persist(entity)
+      id = entity._id
+      entity.aField = 34
+      Storage::Storage.store.persist(entity)
+      expect(entity._id).to eq(id)
+      
+      expect(Storage::Storage.store.find(MyEntity , entity._id).aField).to eq(34)
+    end
+    
+    it 'knows each Entity class that exists from the collection name' do
     end
   end
   
   describe Storage::Entity do
     it 'has an _id attribute' do
+      subject = MyEntity.new
       subject._id = 33
       expect(subject._id).to eq(33)
     end
     
     it 'register as dirty entity on creation' do
+      subject = MyEntity.new
       expect(Storage::Storage.store.dirty).to include(subject)
     end
     
@@ -74,13 +92,16 @@ module Netmento
     end
 
     it 'allow subclass to define the collection name' do
-      class OtherEntity < Storage::Entity
-        def initialize()
-          super("CollectionName")
-        end
+      class FirstEntity < Storage::Entity
+        use_collection_name("CollectionName1")
       end
-      subject = OtherEntity.new
-      expect(subject.collectionName).to eq("CollectionName")
+      class OtherEntity < Storage::Entity
+        use_collection_name("CollectionName2")
+      end
+      e1 = FirstEntity.new.collectionName
+      e2 = OtherEntity.new.collectionName
+      expect(e1).to eq("CollectionName1")
+      expect(e2).to eq("CollectionName2")
     end
     
   end
