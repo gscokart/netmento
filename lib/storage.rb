@@ -74,11 +74,16 @@ module Netmento
         @dirty.delete(entity)
       end
       
-      def find ( collectionClass , id)
+      def find ( collectionClass , id)        
+        return find_one(collectionClass, {"_id" => id})
+      end
+      
+      def find_one ( collectionClass , query)
         colName = collectionClass.class_variable_get(:@@collectionName)
-        hash = @db.collection(colName).find_one({"_id" => id})
+        hash = @db.collection(colName).find_one(query)
         return createFromHash(collectionClass, hash)
       end
+      
       
       def createFromHash( collectionClass, hash)
         result = collectionClass.new

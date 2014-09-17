@@ -51,6 +51,14 @@ module Netmento
       Storage::Storage.store.persist(entity)
       expect(Storage::Storage.store.find(MyEntity , entity._id)).not_to be_nil
     end
+
+    it 'can load an entity using a query' do
+      entity = MyEntity.new
+      entity.aField = 'blabla33'
+      Storage::Storage.store.persist(entity)
+      expect(Storage::Storage.store.find_one(MyEntity , {:aField => 'blabla33'})).not_to be_nil
+    end
+
     
     it 'persist changes made to an entity' do
       entity = MyEntity.new
@@ -64,8 +72,6 @@ module Netmento
       expect(Storage::Storage.store.find(MyEntity , entity._id).aField).to eq(34)
     end
     
-    it 'knows each Entity class that exists from the collection name' do
-    end
   end
   
   describe Storage::Entity do
