@@ -53,7 +53,7 @@ module Netmento
       end
       
       def self.store
-        #TODO how to avoid memory/connection leak => How the the object finalize when not reachable
+        #TODO how to avoid memory/connection leak => How the the object finalize when not reachable        
         Thread.current['netmento.storage.store'] ||= Storage.new        
       end
       

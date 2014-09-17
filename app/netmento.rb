@@ -1,7 +1,11 @@
 
 require 'sinatra/base'
 require 'mongo'
+require 'storage'
+
 include Mongo
+
+module Netmento
 
 class Login < Sinatra::Base
 
@@ -150,3 +154,4 @@ class Netmento < Sinatra::Base
   
 end
 
+end

@@ -1,5 +1,7 @@
 
+$: << 'lib'
+
 require './app/netmento.rb'
 
-use Login
-run Netmento
+use Netmento::Login
+run Netmento::Netmento
