@@ -4,13 +4,13 @@
 %form(method="POST")
   .form-group
     %label UserID:
-    %label= @user["userId"]
+    %label= @user.userId
   .form-group
     %label Name:
-    %input.form-control{:name=>:name, :value=>@user["name"]}
+    %input.form-control{:name=>:name, :value=>@user.name}
   .form-group
     %label Email:
-    %input.form-control{:name=>:email, :type=>:email, :value=>@user["email"]}
+    %input.form-control{:name=>:email, :type=>:email, :value=>@user.email}
   %button.btn.btn-default(type="submit") Save
   #- TODO Add reset passwords
   

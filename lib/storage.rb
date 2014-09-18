@@ -81,6 +81,7 @@ module Netmento
       def find_one ( collectionClass , query)
         colName = collectionClass.class_variable_get(:@@collectionName)
         hash = @db.collection(colName).find_one(query)
+        ##TODO If this entity is already loaded, I should maybe reuse the same
         return createFromHash(collectionClass, hash)
       end
       
