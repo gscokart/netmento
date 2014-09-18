@@ -38,7 +38,7 @@ module Netmento
     post '/login' do
       #TODO Check password
       #TODO Move the lookup into its own DAO/business layer
-      session[:user] = Storage::Storage.store.find_one(Storage::User,{:userId => params["name"]})
+      session[:user] = Storage.store.find_one(User,{:userId => params["name"]})
       redirect '/netmento'
     end
 
@@ -46,10 +46,10 @@ module Netmento
       #TODO store hash of the password
       #TODO check user identity using an email
       #TODO Use captcha
-      user = Storage::User.new
+      user = User.new
       user.userId = params["name"]
       user.password = params['password']
-      Storage::Storage.store.persist(user)
+      Storage.store.persist(user)
       #TODO: Call the login logic
       session[:user] = user
       redirect '/profile'
@@ -100,7 +100,7 @@ module Netmento
     post '/profile' do
       @user.name = params[:name]
       @user.email = params[:email]
-      Storage::Storage.store.persist(@user)
+      Storage.store.persist(@user)
       #TODO update it in the session
       #TODO find a way to the GET result
       haml :profile, :format => :html5
@@ -129,7 +129,7 @@ module Netmento
     post '/trust' do
       trust = (@user.trust or []).push(BSON::ObjectId.from_string(params['_id']))
       @user.trust = trust
-      Storage::Storage.store.persist(@user)
+      Storage.store.persist(@user)
       #TODO Move this to a separated class
       #TODO Make sure we don't add 2 time the same person
       #TODO Make sure we don't add ourself

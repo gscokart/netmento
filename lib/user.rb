@@ -1,24 +1,21 @@
 
 
 module Netmento
-
-  module Storage
   
-    class User < Entity
-      use_collection_name 'users'
+  class User < Entity
+    use_collection_name 'users'
+  
+    attr_stored(:userId)
+    attr_stored(:password)
+    attr_stored(:name)
+    attr_stored(:email)
+    attr_stored(:trust)
     
-      attr_stored(:userId)
-      attr_stored(:password)
-      attr_stored(:name)
-      attr_stored(:email)
-      attr_stored(:trust)
-      
-      def initialize()
-        @trust = []
-      end
-      
+    def initialize()
+      #TODO: Add support for 1-n relationship (even if we should avoid it, we still need it in some case)
+      @trust = []
     end
-  
+    
   end
-
+  
 end
