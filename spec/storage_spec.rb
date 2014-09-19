@@ -1,16 +1,18 @@
 
 require "storage"
-require "config"
+require "spec_config"
+
 
 module Netmento
-
-  module Config
-    def self.dbName; "rspec" end
-  end
 
   class MyEntity < Entity
     use_collection_name "MyEntity"
     attr_stored(:aField)
+  end
+
+  class MyOtherEntity < Entity
+    use_collection_name "MyOtherEntity"
+    attr_stored(:anOtherField)
   end
 
   
@@ -18,6 +20,7 @@ module Netmento
     it 'conect to rspec database in test' do
       expect(Storage.store.dbName).to eq("rspec")
     end
+    
     it 'has an instance per thread' do
       other = nil
       Thread.new {
@@ -91,25 +94,29 @@ module Netmento
       subject.aField = 33
       expect(subject.to_hash).to include(:aField => 33)
     end
-    
-    it 'map to a collection defaulting to the class name' do
-      subject = MyEntity.new
-      expect(subject.collectionName).to eq("MyEntity")
+
+    it 'compare instances' do
+      subject1 = MyEntity.new
+      subject2 = MyEntity.new
+      subject2.aField = 'otherVal'
+      subject1bis = MyEntity.new
+      expect(subject1).to eql(subject1)
+      expect(subject1).not_to eql(subject2)
+      expect(subject2).to eql(subject2)
+      expect(subject1).to eql(subject1bis)
     end
 
     it 'allow subclass to define the collection name' do
-      class FirstEntity < Entity
-        use_collection_name("CollectionName1")
-      end
-      class OtherEntity < Entity
-        use_collection_name("CollectionName2")
-      end
-      e1 = FirstEntity.new.collectionName
-      e2 = OtherEntity.new.collectionName
-      expect(e1).to eq("CollectionName1")
-      expect(e2).to eq("CollectionName2")
+      e1 = MyEntity.new
+      e2 = MyOtherEntity.new
+      expect(e1.collectionName).to eq("MyEntity")
+      expect(e2.collectionName).to eq("MyOtherEntity")
     end
     
+    it 'has fields for each entity type' do
+      MyEntity.new.aField = 1
+      expect { MyEntity.new.anOtherField }.to raise_error
+    end
   end
 
 end

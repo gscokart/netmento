@@ -15,20 +15,30 @@ module Netmento
   
     def self.attr_stored(attrName)
       attr_accessor(attrName)
-      @@fields ||= []
-      @@fields.push attrName
+      class_variable_set(:@@fields, fields.push(attrName))
     end
     
     def to_hash
       result = Hash.new
-      @@fields ||= []
-      @@fields.each { |field| result[field] = self.instance_variable_get(("@" + field.to_s).to_sym) }
+      self.class.fields().each { |field| result[field] = self.instance_variable_get(("@" + field.to_s).to_sym) }
       result[:_id] = @_id if  @_id
       return result
     end
     
+    def eql? (other)
+      return self.equal?(other) || self.to_hash().eql?(other.to_hash())
+    end
+    
     def self.use_collection_name(colName) 
       class_variable_set(:@@collectionName, colName)
+    end
+    
+    def self.fields() 
+      if class_variable_defined?(:@@fields) 
+        return class_variable_get(:@@fields) 
+      else
+        return []
+      end
     end
     
     def collectionName

@@ -43,7 +43,6 @@ module Netmento
     end
 
     post '/register' do
-      #TODO store hash of the password
       #TODO check user identity using an email
       #TODO Use captcha
       user = User.new

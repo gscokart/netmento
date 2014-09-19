@@ -1,4 +1,5 @@
 
+require 'storage'
 
 module Netmento
   
@@ -6,7 +7,7 @@ module Netmento
     use_collection_name 'users'
   
     attr_stored(:userId)
-    attr_stored(:password)
+    attr_stored(:password)       #TODO store hash of the password.
     attr_stored(:name)
     attr_stored(:email)
     attr_stored(:trust)
@@ -16,6 +17,11 @@ module Netmento
       @trust = []
     end
     
+    
+    def self.login(userId , password)
+      #TODO check password
+      return Storage.store.find_one(User , {:userId => userId})
+    end
   end
   
 end
