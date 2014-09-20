@@ -87,10 +87,6 @@ This site doesn't came out of nowhere, it take its inspiration from various site
 - Stackoverflow
 
 == Next steps
-- Connection DB
-- Understand connection pooling (and interactions with shotgun)
-- Use config.ru/shotgun to start mongoDB
-- RSpec test
 - rvm
 - Rake file
 - Pourquoi un fichier VERSION ?

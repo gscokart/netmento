@@ -10,7 +10,6 @@ module Netmento
     def initialize ( )
       raise "collectionName must be defined.  Please invoke use_collection_name class method" \
         unless self.class.class_variable_defined?(:@@collectionName)
-      Storage.store.addDirty(self)
     end
   
     def self.attr_stored(attrName)
@@ -53,34 +52,19 @@ module Netmento
   
   class Storage
     attr_reader(:dbName)
-    attr_reader(:dirty)
   
     def initialize( )
       @dbName = Config::dbName
       @db = Mongo::MongoClient.new[Config::dbName]
-      @dirty = Set.new
     end
     
     def self.store
-      #TODO how to avoid memory/connection leak => How the the object finalize when not reachable        
-      Thread.current['netmento.storage.store'] ||= Storage.new        
+      @@store ||= Storage.new        
     end
-    
-    def addDirty( entity )
-      raise TypeError unless entity.is_a?(Entity)
-      @dirty.add(entity)
-    end
-    
-    def flush()
-      @dirty.each { |entity|
-        persist(entity)
-      }
-    end
-    
+        
     def persist ( entity )        
       raise TypeError unless entity.is_a?(Entity)
       entity._id = @db.collection(entity.collectionName).save(entity.to_hash)
-      @dirty.delete(entity)
     end
     
     def find ( collectionClass , id)        

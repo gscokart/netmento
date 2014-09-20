@@ -21,28 +21,6 @@ module Netmento
       expect(Storage.store.dbName).to eq("rspec")
     end
     
-    it 'has an instance per thread' do
-      other = nil
-      Thread.new {
-        other = Storage.store
-      }.join
-      expect(Storage.store).not_to be other
-    end
-    
-    it 'persist all dirty entities' do
-      entity = MyEntity.new
-      Storage.store.dirty.add(entity)
-      Storage.store.flush
-      expect(Storage.store.find(MyEntity, entity._id)).not_to be_nil
-    end
-    
-    it 'remove persisted entities from the dirty set of entities' do
-      entity = MyEntity.new
-      Storage.store.dirty.add(entity)
-      Storage.store.persist(entity)
-      expect(Storage.store.dirty).not_to include(entity)
-    end
-
     it 'provides the _id to the persisted entities' do
       entity = MyEntity.new
       Storage.store.persist(entity)
@@ -83,12 +61,7 @@ module Netmento
       subject._id = 33
       expect(subject._id).to eq(33)
     end
-    
-    it 'register as dirty entity on creation' do
-      subject = MyEntity.new
-      expect(Storage.store.dirty).to include(subject)
-    end
-    
+        
     it 'provides hash of values' do
       subject = MyEntity.new
       subject.aField = 33
