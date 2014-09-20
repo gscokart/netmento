@@ -36,9 +36,7 @@ module Netmento
     end
 
     post '/login' do
-      #TODO Check password
-      #TODO Move the lookup into its own DAO/business layer
-      session[:user] = Storage.store.find_one(User,{:userId => params["name"]})
+      session[:user] = User.login(params["name"], params["password"])
       redirect '/netmento'
     end
 
