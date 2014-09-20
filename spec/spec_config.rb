@@ -2,7 +2,7 @@
 require 'config'
 require 'mongo'
 
-Mongo::MongoClient.new["rspec"].collections.each { |c| c.drop }
+Mongo::MongoClient.new.drop_database("rspec")
 
 module Netmento
 
